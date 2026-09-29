@@ -18,7 +18,7 @@
             </nav>
 
             <div class="row">
-                <div class="mt-5 col-lg-7 col-sm-8">
+                <div class="mt-1 col-lg-7 col-sm-8">
                     <div class="card shadow">
                         <div class="card-header ">
                             <h5>Category's Information</h5>
@@ -27,28 +27,22 @@
                         <div class="card-body">
 
                             <div class="form-group row">
-                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Name') }}</b></label>
-
-                                <div class="offset-1 col-10">
-                                    <span>{{$category->name}}</span>
-                                </div>
+                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Name') }}: </b><span>{{$category->name}}</span></label>
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Description') }}</b></label>
-
-                                <div class="offset-1 col-10">
-                                    <span>{{$category->desc}}</span>
-                                </div>
+                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Description') }}: </b><span>{{$category->desc}}</span></label>
                             </div>
 
-                            <a href="{{ route('categories.edit', $category) }}" class="btn btn-outline-info float-left mr-2"><i class="fa fa-pencil-alt"></i> Edit</a>
+                            <div class="mt-4">
+                                <a href="{{ route('categories.edit', $category) }}" class="btn btn-outline-info float-left mr-2"><i class="fa fa-pencil-alt"></i> Edit</a>
 
-                            <button class="btn btn-outline-danger" data-toggle="modal" data-target="#delCategoryModal">
-                                <i class="fas fa-trash fa-sm fa-fw"></i>
-                                Delete
-                            </button>
-                            <div class="clearfix"></div>
+                                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#delCategoryModal">
+                                    <i class="fas fa-trash fa-sm fa-fw"></i>
+                                    Delete
+                                </button>
+                                <div class="clearfix"></div>
+                            </div>
                         </div>
 
                     </div>

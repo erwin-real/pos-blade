@@ -26,6 +26,18 @@
         Interface
     </div>
 
+    <li class="nav-item {{ request()->is('pos') ? 'active' : '' }}">
+        <a class="nav-link" href="/pos">
+            <i class="fas fa-fw fa-shopping-cart"></i>
+            <span>POS</span></a>
+    </li>
+
+    <li class="nav-item {{ request()->is('products') || request()->is('products/*') ? 'active' : '' }}">
+        <a class="nav-link" href="/products">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Products</span></a>
+    </li>
+
     <li class="nav-item {{ request()->is('categories') || request()->is('categories/*') ? 'active' : '' }}">
         <a class="nav-link" href="/categories">
             <i class="fas fa-fw fa-cog"></i>

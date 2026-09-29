@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <x-slot:topbarTitle>
-        Categories
+        Products
     </x-slot>
 
     <div class="body-right">
@@ -10,7 +10,7 @@
             <!-- Page Heading -->
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item active" aria-current="page">Categories</li>
+                    <li class="breadcrumb-item active" aria-current="page">Products</li>
                 </ol>
             </nav>
 
@@ -19,17 +19,10 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h5 class="float-left m-0 font-weight-bold text-primary">Records</h5>
-                            <a href="/categories/create" class="btn btn-outline-primary float-right"><i class="fas fa-plus"></i> Add Category</a>
+                            <a href="/products/create" class="btn btn-outline-primary float-right"><i class="fas fa-plus"></i> Add Product</a>
                             <div class="clearfix"></div>
                         </div>
-
-                        
-                        {{-- <div class="card-header">
-                            <h5 class="float-left">Tools</h5>
-                            <a href="/tools/create" class="btn btn-outline-primary float-right"><i class="fas fa-plus"></i> Add Tool</a>
-                            <div class="clearfix"></div>
-                        </div> --}}
-                        
+        
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -48,11 +41,11 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        @foreach ($categories as $category)
+                                        @foreach ($products as $product)
                                             <tr>
-                                                <td>{{ $category->id }}</td>
-                                                <td><a href="/categories/{{ $category->id }}">{{ $category->name }}</a></td>
-                                                <td>{{ $category->desc }}</td>
+                                                <td>{{ $product->id }}</td>
+                                                <td><a href="/products/{{ $product->id }}">{{ $product->name }}</a></td>
+                                                <td>{{ $product->desc }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

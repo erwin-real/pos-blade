@@ -28,8 +28,9 @@
 
                     <div class="card-body">
 
-                        <form method="POST" action="/categories" onsubmit="return check()">
+                        <form method="POST" action="{{ route('categories.update', $category) }}">
                             @csrf
+                            @method('PUT')
 
                             <div class="form-group row">
                                 <label for="name" class="col-md-8 col-form-label text-md-left">{{ __('Category Name') }} <span class="text-danger">*</span></label>
