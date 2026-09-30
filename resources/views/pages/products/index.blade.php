@@ -31,6 +31,9 @@
                                             <th>ID</th>
                                             <th>Name</th>
                                             <th>Description</th>
+                                            <th>Category</th>
+                                            <th>Stocks</th>
+                                            <th>Expiration date</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -38,6 +41,9 @@
                                             <th>ID</th>
                                             <th>Name</th>
                                             <th>Description</th>
+                                            <th>Category</th>
+                                            <th>Stocks</th>
+                                            <th>Expiration date</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -46,6 +52,9 @@
                                                 <td>{{ $product->id }}</td>
                                                 <td><a href="/products/{{ $product->id }}">{{ $product->name }}</a></td>
                                                 <td>{{ $product->desc }}</td>
+                                                <td>{{ $product->category->name }}</td>
+                                                <td class="{{ $product->stocks <= $product->procurement ? 'text-danger font-weight-bolder' : ''}}">{{ $product->stocks }}</td>
+                                                <td>{{ $product->expired_at ? date('D M d, Y', strtotime($product->expired_at)) : '-'}}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

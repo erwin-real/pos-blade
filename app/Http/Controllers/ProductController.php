@@ -46,9 +46,9 @@ class ProductController extends Controller
 
         $data['cover_image'] = $fileNameToStore;
 
-        Product::create($data);
+        $product = Product::create($data);
 
-        return redirect()->route('products.index');
+        return redirect()->route('products.show', $product);
     }
 
     /**

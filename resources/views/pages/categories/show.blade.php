@@ -34,6 +34,42 @@
                                 <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Description') }}: </b><span>{{$category->desc}}</span></label>
                             </div>
 
+                            
+                            <div class="form-group row">
+                                <label for="name" class="col-md-12 col-form-label text-md-left"><b>{{ __('Products') }}</b></label>
+
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                                <th>Stocks</th>
+                                                <th>Procurement</th>
+                                                <th>Price</th>
+                                                <th>SRP</th>
+                                                <th>Exp date</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($category->products as $product)
+                                                <tr>
+                                                    <td>{{$product->name}}</td>
+                                                    <td>{{$product->desc}}</td>
+                                                    <td>{{$product->stocks}}</td>
+                                                    <td>{{$product->procurement}}</td>
+                                                    <td>{{$product->price}}</td>
+                                                    <td>{{$product->srp}}</td>
+                                                    <td>{{$product->expired_at ? date('D M d, Y', strtotime($product->expired_at)) : '-'}}</td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="mt-4">
                                 <a href="{{ route('categories.edit', $category) }}" class="btn btn-outline-info float-left mr-2"><i class="fa fa-pencil-alt"></i> Edit</a>
 

@@ -26,8 +26,8 @@
         Interface
     </div>
 
-    <li class="nav-item {{ request()->is('pos') ? 'active' : '' }}">
-        <a class="nav-link" href="/pos">
+    <li class="nav-item {{ request()->is('orders/create') ? 'active' : '' }}">
+        <a class="nav-link" href="/orders/create">
             <i class="fas fa-fw fa-shopping-cart"></i>
             <span>POS</span></a>
     </li>

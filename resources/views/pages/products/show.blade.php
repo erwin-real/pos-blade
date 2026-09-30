@@ -26,9 +26,13 @@
                         </div>
                         <div class="card-body">
 
-                            <div class="form-group row d-block text-center">
+                            <div class="form-group row d-block text-left">
                                 <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Photo') }}</b></label>
-                                <img class="img-thumbnail rounded" src="/storage/products/{{$product->cover_image}}" alt="">
+                                @if ($product->cover_image != 'noimage.jpg')
+                                    <img class="img-thumbnail rounded" src="/storage/products/{{$product->cover_image}}" alt="">
+                                @else
+                                    <span class="ml-5">None</span>
+                                @endif
                             </div>
 
                             <div class="form-group row">
@@ -44,7 +48,10 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Stocks') }}: </b><span>{{$product->stocks}}</span></label>
+                                <label class="col-md-12 col-form-label text-md-left {{$product->stocks <= $product->procurement ? 'text-danger font-weight-bolder' : ''}}">
+                                    <b>{{ __('Stocks') }}: </b>
+                                    <span>{{$product->stocks}}</span>
+                                </label>
                             </div>
 
                             <div class="form-group row">
@@ -62,7 +69,7 @@
                             <div class="form-group row">
                                 <label class="col-md-12 col-form-label text-md-left">
                                     <b>{{ __('Expiration Date') }}: </b>
-                                    <span id="name">{{ date('D M d, Y', strtotime($product->expired_at)) }}</span>
+                                    <span id="name">{{ $product->expired_at ? date('D M d, Y', strtotime($product->expired_at)) : '-'}}</span>
                                 </label>
                             </div>
 

@@ -16,12 +16,13 @@ return new class extends Migration
             $table->string('name');
             $table->string('category_id');
             $table->string('desc')->nullable();
-            $table->integer('stocks');
-            $table->double('price');
-            $table->double('srp');
+            $table->unsignedInteger('stocks');
+            $table->decimal('price', 10, 2);
+            $table->decimal('srp', 10, 2);
             $table->timestamp('expired_at')->nullable();
             $table->unsignedInteger('procurement');
             $table->string('cover_image');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
