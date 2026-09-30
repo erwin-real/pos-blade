@@ -33,6 +33,7 @@
                                             <th>Description</th>
                                             <th>Category</th>
                                             <th>Stocks</th>
+                                            <th>Price</th>
                                             <th>Expiration date</th>
                                         </tr>
                                     </thead>
@@ -43,6 +44,7 @@
                                             <th>Description</th>
                                             <th>Category</th>
                                             <th>Stocks</th>
+                                            <th>Price</th>
                                             <th>Expiration date</th>
                                         </tr>
                                     </tfoot>
@@ -54,6 +56,7 @@
                                                 <td>{{ $product->desc }}</td>
                                                 <td>{{ $product->category->name }}</td>
                                                 <td class="{{ $product->stocks <= $product->procurement ? 'text-danger font-weight-bolder' : ''}}">{{ $product->stocks }}</td>
+                                                <td>Php {{ $product->srp }}</td>
                                                 <td>{{ $product->expired_at ? date('D M d, Y', strtotime($product->expired_at)) : '-'}}</td>
                                             </tr>
                                         @endforeach

@@ -55,7 +55,7 @@
                                             <tbody>
                                             @foreach($category->products as $product)
                                                 <tr>
-                                                    <td>{{$product->name}}</td>
+                                                    <td><a href="/products/{{$product->id}}">{{$product->name}}</a></td>
                                                     <td>{{$product->desc}}</td>
                                                     <td>{{$product->stocks}}</td>
                                                     <td>{{$product->procurement}}</td>

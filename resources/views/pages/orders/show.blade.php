@@ -27,15 +27,19 @@
                         <div class="card-body">
 
                             <div class="form-group row">
-                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Total Amount') }}: </b><span>{{$order->total_amount}}</span></label>
+                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Total Amount') }}: </b><span>Php {{$order->total_amount}}</span></label>
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Amount Received') }}: </b><span>{{$order->amount_received}}</span></label>
+                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Amount Received') }}: </b><span>Php {{$order->amount_received}}</span></label>
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Change') }}: </b><span>{{$order->change}}</span></label>
+                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Change') }}: </b><span>Php {{$order->change}}</span></label>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Total Profit') }}: </b><span>Php {{$order->total_profit}}</span></label>
                             </div>
 
                             <div class="form-group row">
@@ -47,6 +51,40 @@
                                     <b>{{ __('Date Created') }}: </b>
                                     <span id="name">{{ $order->created_at ? date('M d, Y D h:i a', strtotime($order->created_at)) : '-'}}</span>
                                 </label>
+                            </div>
+
+                            
+                            <div class="form-group row">
+                                <label for="name" class="col-md-12 col-form-label text-md-left"><b>{{ __('Order Items') }}</b></label>
+
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Quantity</th>
+                                                <th>Unit Cost</th>
+                                                <th>Unit Price</th>
+                                                <th>Subtotal</th>
+                                                <th>Item Profit</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($order->order_items as $item)
+                                                <tr>
+                                                    <td><a href="/products/{{$item->product->id}}">{{$item->product->name}}</a></td>
+                                                    <td>{{$item->quantity}}</td>
+                                                    <td>{{$item->unit_cost}}</td>
+                                                    <td>{{$item->unit_price}}</td>
+                                                    <td>{{$item->subtotal}}</td>
+                                                    <td>{{$item->item_profit}}</td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
 
                             {{-- <div class="mt-4">
