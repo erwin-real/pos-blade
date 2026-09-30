@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable('total_amount', 'discount_amount', 'net_amount', 'amount_received', 'change', 'payment_method', 'payment_status')]
+#[Fillable('total_amount', 'discount_amount', 'net_amount', 'amount_received', 'total_profit', 'change', 'payment_method', 'payment_status')]
 class Order extends Model
 {
     use SoftDeletes;

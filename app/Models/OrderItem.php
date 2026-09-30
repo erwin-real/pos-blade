@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable('order_id', 'product_id', 'quantity', 'unit_price', 'subtotal')]
+#[Fillable('order_id', 'product_id', 'quantity', 'unit_cost', 'unit_price', 'subtotal', 'item_profit')]
 class OrderItem extends Model
 {
     use SoftDeletes;

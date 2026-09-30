@@ -32,6 +32,12 @@
             <span>POS</span></a>
     </li>
 
+    <li class="nav-item {{ (request()->is('orders') || request()->is('orders/*')) && !request()->is('orders/create') ? 'active' : '' }}">
+        <a class="nav-link" href="/orders">
+            <i class="fas fa-fw fa-receipt"></i>
+            <span>Orders</span></a>
+    </li>
+
     <li class="nav-item {{ request()->is('products') || request()->is('products/*') ? 'active' : '' }}">
         <a class="nav-link" href="/products">
             <i class="fas fa-fw fa-table"></i>

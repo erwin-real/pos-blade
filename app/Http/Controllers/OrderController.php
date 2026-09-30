@@ -17,7 +17,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.orders.index')->with('orders', Order::orderBy('created_at', 'desc')->get());
     }
 
     /**
@@ -41,88 +41,90 @@ class OrderController extends Controller
         // 1. Assert request contains correct data arrays
         $validated = $request->validated();
 
-        // 2. Open an isolated transaction context block to secure database mutations
         DB::beginTransaction();
 
         try {
             $subtotal = 0;
+            $orderProfitAccumulator = 0;
+            $itemsPayloadData = [];
 
-            // Compute math checks locally against raw backend numbers to prevent injection tempering
             foreach ($validated['items'] as $item) {
-                // Use lockForUpdate to block concurrent transaction stock manipulation anomalies
                 $product = Product::lockForUpdate()->find($item['product_id']);
 
-                // Ensure item stock parameters still satisfy customer request criteria
                 if ($product->stocks < $item['quantity']) {
-                    throw new Exception("Insufficient stock for item: {$product->name}. Balance available: {$product->stocks}");
+                    throw new Exception("Insufficient stock for item: {$product->name}");
                 }
 
-                $subtotal += $item['srp'] * $item['quantity'];
+                // Calculate math values using backend database records
+                $itemSubtotal = $product->srp * $item['quantity'];
+                $itemCostBasis = $product->price * $item['quantity'];
+                $itemProfitAmount = $itemSubtotal - $itemCostBasis;
+
+                $subtotal += $itemSubtotal;
+                $orderProfitAccumulator += $itemProfitAmount;
+
+                // Stage processed data to execute cleanly inside sequential DB inserts
+                $itemsPayloadData[] = [
+                    'product_id'  => $product->id,
+                    'quantity'    => $item['quantity'],
+                    'unit_cost'   => $product->price,
+                    'unit_price'  => $product->srp,
+                    'subtotal'    => $itemSubtotal,
+                    'item_profit' => $itemProfitAmount,
+                    'product_model' => $product // reference pointer
+                ];
             }
 
-            // Financial breakdown mapping logic (Matches 12% VAT specifications)
             // $taxAmount = $subtotal * 0.12;
             // $netAmount = $subtotal + $taxAmount;
             $netAmount = $subtotal;
 
-            if ($validated['amount_paid'] < $netAmount && $validated['payment_method'] === 'Cash') {
-                throw new Exception("Insufficient payment amount provided.");
-            }
-
-            // 3. Create the Main Transaction Order Record Header
+            // 1. Save Main Transaction Header with computed total profit metrics
             $order = Order::create([
                 'total_amount'    => $subtotal,
                 'discount_amount' => 0.00,
                 'net_amount'      => $netAmount,
                 'amount_received' => $validated['amount_paid'],
                 'change'          => $validated['change'],
+                'total_profit'    => $orderProfitAccumulator, // 👈 Saved Profit Tracker
                 'payment_method'  => $validated['payment_method'],
                 'payment_status'  => 'completed',
             ]);
 
-            // 4. Populate Line Item records and decrement inventory metrics
-            foreach ($validated['items'] as $item) {
-                $product = Product::find($item['product_id']);
-
-                // Save individual item tracking row snapshots 
+            // 2. Write Line Items and decrement inventories
+            foreach ($itemsPayloadData as $data) {
                 $order->order_items()->create([
                     'order_id'   => $order->id,
-                    'product_id' => $item['product_id'],
-                    'quantity'   => $item['quantity'],
-                    'unit_price' => $item['srp'],
-                    'subtotal'   => $item['srp'] * $item['quantity']
+                    'product_id'  => $data['product_id'],
+                    'quantity'    => $data['quantity'],
+                    'unit_cost'   => $data['unit_cost'],
+                    'unit_price'  => $data['unit_price'],
+                    'subtotal'    => $data['subtotal'],
+                    'item_profit' => $data['item_profit'],
                 ]);
 
-                // Decrement inventory stocks
-                $product->decrement('stocks', $item['quantity']);
+                $data['product_model']->decrement('stocks', $data['quantity']);
             }
 
-            // Everything succeeded. Commit all updates permanently to storage
             DB::commit();
-
             return response()->json([
-                'success' => true,
-                'message' => 'Transaction compiled successfully. Stock entries cleared.',
+                'success' => true, 
+                'message' => 'Transaction compiled successfully.',
                 'order_id' => $order->id
             ], 200);
 
         } catch (Exception $e) {
-            // Something failed. Undo everything within this block to preserve database integrity.
             DB::rollBack();
-
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], 422);
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Order $order)
     {
-        //
+        return view('pages.orders.show')->with('order', $order);
     }
 
     /**

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('category_id');
             $table->string('desc')->nullable();
             $table->unsignedInteger('stocks');
-            $table->decimal('price', 10, 2);
+            $table->decimal('price', 10, 2)->default(0.00);
             $table->decimal('srp', 10, 2);
             $table->timestamp('expired_at')->nullable();
             $table->unsignedInteger('procurement');

@@ -16,8 +16,10 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->constrained();
             $table->unsignedInteger('quantity');
-            $table->decimal('unit_price', 10, 2);
-            $table->decimal('subtotal', 10, 2);
+            $table->decimal('unit_cost', 10, 2)->default(0.00);
+            $table->decimal('unit_price', 10, 2)->default(0.00);
+            $table->decimal('subtotal', 10, 2)->default(0.00);
+            $table->decimal('item_profit', 10, 2)->default(0.00);
             $table->softDeletes();
         });
     }
