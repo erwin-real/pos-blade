@@ -57,7 +57,7 @@
                                     </div>
                                     <div>
                                         <small class="text-xs font-weight-bold text-uppercase text-gray-500 d-block text-truncate">{{ $product->desc }}</small>
-                                        <h6 class="font-weight-bold text-gray-800 text-truncate mb-1">{{ $product->name }}</h6>
+                                        <h6 class="font-weight-bold text-gray-800 mb-1">{{ $product->name }}</h6>
                                     </div>
                                     <div class="text-primary font-weight-bold mt-1">
                                         ₱{{ number_format($product->srp, 2) }}

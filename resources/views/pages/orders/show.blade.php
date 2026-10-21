@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <x-slot:topbarTitle>
-        Date: {{ $order->created_at }}
+        Date: {{ date('M d, Y D h:i a', strtotime($order->created_at)) }}
     </x-slot>
 
     <div class="body-right">

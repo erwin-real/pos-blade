@@ -113,7 +113,7 @@
 
                             {{-- PRICE --}}
                             <div class="form-group row">
-                                <label for="price" class="col-md-12 col-form-label text-md-left">{{ __('Price') }} <span class="text-danger">*</span></label>
+                                <label for="price" class="col-md-12 col-form-label text-md-left">{{ __('Cost') }} <span class="text-danger">*</span></label>
 
                                 <div class="col-md-12">
                                     <input id="price" type="number" value="{{ $product->price }}" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" autofocus required>
@@ -148,7 +148,9 @@
 
                                 <div class="col-md-12">
                                     <input id="expired_at" 
-                                        value="{{ date('Y-m-d', strtotime($product->expired_at)) }}" 
+                                        @if ($product->expired_at)
+                                            value="{{ date('Y-m-d', strtotime($product->expired_at)) }}" 
+                                        @endif
                                         type="date" 
                                         class="form-control{{ $errors->has('expired_at') ? ' is-invalid' : '' }}" 
                                         name="expired_at" 

@@ -59,7 +59,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Price') }}: </b><span>PHP {{$product->price}}</span></label>
+                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Cost') }}: </b><span>PHP {{$product->price}}</span></label>
                             </div>
 
                             <div class="form-group row">

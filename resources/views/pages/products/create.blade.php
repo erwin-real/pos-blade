@@ -50,7 +50,9 @@
                                 <div class="col-md-12">
                                     <select id="category" name="category_id" class="form-control" required autofocus>
                                         @foreach($categories as $category)
-                                            <option value="{{$category->id}}">{{$category->name . ' | ' . $category->desc}}</option>
+                                            <option value="{{$category->id}}">
+                                                {{ $category->name }} @if ($category->desc) | {{$category->desc}} @endif
+                                            </option>
                                         @endforeach
                                     </select>
 
@@ -109,7 +111,7 @@
 
                             {{-- PRICE --}}
                             <div class="form-group row">
-                                <label for="price" class="col-md-12 col-form-label text-md-left">{{ __('Price') }} <span class="text-danger">*</span></label>
+                                <label for="price" class="col-md-12 col-form-label text-md-left">{{ __('Cost') }} <span class="text-danger">*</span></label>
 
                                 <div class="col-md-12">
                                     <input id="price" type="number" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" autofocus required>

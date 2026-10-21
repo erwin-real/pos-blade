@@ -120,7 +120,7 @@
 
             if (exportTemplateBtn) {
                 exportTemplateBtn.addEventListener('click', function() {
-                    const headers = ["name", "desc", "srp", "price", "stocks", "category", "category_description", "procurement", "expired_at"];
+                    const headers = ["name", "desc", "srp", "price", "stocks", "category", "procurement", "expired_at"];
                     const samples = [
                         ["Colgate Ultra Mint", "Toothpaste 100ml", "95.50", "62.00", "120", "Toothpaste", "Oral hygiene and toothpastes", "15", "2028-12-31"],
                         ["Safeguard White Soap", "Bar soap", "45.00", "28.50", "85", "Soap", "Antibacterial bar soaps", "10", ""] // Left blank on purpose
@@ -164,7 +164,7 @@
                 const firstLineRawText = lines[0];
                 const headers = firstLineRawText.split(',').map(h => h.toLowerCase().trim().replace(/['"]+/g, ''));
                 
-                const requiredFields = ['name', 'desc', 'srp', 'price', 'stocks', 'category', 'category_description', 'expired_at'];
+                const requiredFields = ['name', 'desc', 'srp', 'price', 'stocks', 'category', 'expired_at'];
 
                 const missingFields = requiredFields.filter(f => !headers.includes(f));
                 if (missingFields.length > 0) {
@@ -197,7 +197,6 @@
                     let name = rowData['name'];
                     let desc = rowData['desc'];
                     let category = rowData['category'];
-                    let category_description = rowData['category_description'];
                     let srp = parseFloat(rowData['srp']);         
                     let price = parseFloat(rowData['price']);     
                     let stocks = parseInt(rowData['stocks']);
@@ -226,7 +225,7 @@
                     } else {
                         totalStagedValidRowsCount++;
                         stagedItemsPayload.push({ 
-                            name, desc, srp, price, stocks, category, category_description, procurement, expired_at 
+                            name, desc, srp, price, stocks, category, procurement, expired_at 
                         });
                     }
 
@@ -241,7 +240,6 @@
                             </td>
                             <td>
                                 <span class="font-weight-bold text-primary d-block">${category || 'Unassigned'}</span>
-                                <small class="text-muted d-block text-truncate" style="max-width:200px;">${category_description || 'No description supplied'}</small>
                             </td>
                             <td class="text-right font-mono">
                                 <small class="text-muted d-block">Cost Price: ₱${isNaN(price) ? '0.00' : price.toFixed(2)}</small>
