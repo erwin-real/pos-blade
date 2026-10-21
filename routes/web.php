@@ -12,6 +12,9 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/products/import', [ProductController::class, 'importProducts']);
+    Route::post('/products/import', [ProductController::class, 'importBatch']);
+
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
     Route::resource('orders', OrderController::class);

@@ -38,9 +38,11 @@
                                 <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Change') }}: </b><span>Php {{$order->change}}</span></label>
                             </div>
 
-                            <div class="form-group row">
-                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Total Profit') }}: </b><span>Php {{$order->total_profit}}</span></label>
-                            </div>
+                            @if(Auth::user()->type == 'admin')
+                                <div class="form-group row">
+                                    <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Total Profit') }}: </b><span>Php {{$order->total_profit}}</span></label>
+                                </div>
+                            @endif
 
                             <div class="form-group row">
                                 <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Payment Method') }}: </b><span>{{$order->payment_method}}</span></label>
@@ -67,7 +69,10 @@
                                                 <th>Unit Cost</th>
                                                 <th>Unit Price</th>
                                                 <th>Subtotal</th>
-                                                <th>Item Profit</th>
+                                                
+                                                @if(Auth::user()->type == 'admin')
+                                                    <th>Item Profit</th>
+                                                @endif
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -78,7 +83,9 @@
                                                     <td>{{$item->unit_cost}}</td>
                                                     <td>{{$item->unit_price}}</td>
                                                     <td>{{$item->subtotal}}</td>
-                                                    <td>{{$item->item_profit}}</td>
+                                                    @if(Auth::user()->type == 'admin')
+                                                        <td>{{$item->item_profit}}</td>
+                                                    @endif
                                                 </tr>
                                             @endforeach
                                             </tbody>

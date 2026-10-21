@@ -6,12 +6,17 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     public function index()
     {
+        if (Auth::user()->type === 'seller') {
+            return redirect()->route('orders.create');
+        }
+
         $now = Carbon::now();
 
         // 1. Multi-Period Profit Calculations

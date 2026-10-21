@@ -50,7 +50,7 @@
                                 <div class="col-md-12">
                                     <select id="category" name="category_id" class="form-control" required autofocus>
                                         @foreach($categories as $category)
-                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                            <option value="{{$category->id}}">{{$category->name . ' | ' . $category->desc}}</option>
                                         @endforeach
                                     </select>
 
