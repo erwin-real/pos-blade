@@ -67,7 +67,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-12 col-form-label text-md-left">
+                                <label class="col-md-12 col-form-label text-md-left {{ $product->expired_at && $product->getisOneMonthLeftOrLess() ? 'text-danger font-weight-bolder' : '' }}">
                                     <b>{{ __('Expiration Date') }}: </b>
                                     <span id="name">{{ $product->expired_at ? date('D M d, Y', strtotime($product->expired_at)) : '-'}}</span>
                                 </label>

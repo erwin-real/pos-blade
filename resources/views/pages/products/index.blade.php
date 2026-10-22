@@ -58,7 +58,14 @@
                                                 <td>{{ $product->category->name }}</td>
                                                 <td class="{{ $product->stocks <= $product->procurement ? 'text-danger font-weight-bolder' : ''}}">{{ $product->stocks }}</td>
                                                 <td>Php {{ $product->srp }}</td>
-                                                <td>{{ $product->expired_at ? date('D M d, Y', strtotime($product->expired_at)) : '-'}}</td>
+                                                <td
+                                                    class="{{ $product->expired_at && $product->getisOneMonthLeftOrLess()
+                                                        ? 'text-danger font-weight-bolder'
+                                                        : ''
+                                                    }}"
+                                                >
+                                                    {{ $product->expired_at ? date('D M d, Y', strtotime($product->expired_at)) : '-'}}
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

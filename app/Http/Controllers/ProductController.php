@@ -211,7 +211,8 @@ class ProductController extends Controller
             DB::commit();
             return response()->json([
                 'success' => true, 
-                'message' => "Successfully evaluated and synced {$syncCounter} items. Earliest shelf-life limits calculated and applied."
+                'message' => "Successfully evaluated and synced {$syncCounter} items."
+                // 'message' => "Successfully evaluated and synced {$syncCounter} items. Earliest shelf-life limits calculated and applied."
             ], 200);
 
         } catch (Exception $e) {
