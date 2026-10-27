@@ -143,23 +143,23 @@ class ProductController extends Controller
         try {
             $syncCounter = 0;
             
-            // Build an in-memory collection cache tracking the earliest date variations found inside the file itself
-            $fileDateConsolidatorCache = [];
-            foreach ($validated['products'] as $item) {
-                $uniqueFileKey = trim($item['name']) . '|||' . trim($item['desc']);
-                $incomingDateStr = !empty($item['expired_at']) ? trim($item['expired_at']) : null;
+            // // Build an in-memory collection cache tracking the earliest date variations found inside the file itself
+            // $fileDateConsolidatorCache = [];
+            // foreach ($validated['products'] as $item) {
+            //     $uniqueFileKey = trim($item['name']) . '|||' . trim($item['desc']);
+            //     $incomingDateStr = !empty($item['expired_at']) ? trim($item['expired_at']) : null;
 
-                if (!isset($fileDateConsolidatorCache[$uniqueFileKey])) {
-                    $fileDateConsolidatorCache[$uniqueFileKey] = $incomingDateStr;
-                } else {
-                    // Compare duplicates found within the uploaded spreadsheet file itself
-                    if ($incomingDateStr !== null) {
-                        if ($fileDateConsolidatorCache[$uniqueFileKey] === null || Carbon::parse($incomingDateStr)->lt(Carbon::parse($fileDateConsolidatorCache[$uniqueFileKey]))) {
-                            $fileDateConsolidatorCache[$uniqueFileKey] = $incomingDateStr;
-                        }
-                    }
-                }
-            }
+            //     if (!isset($fileDateConsolidatorCache[$uniqueFileKey])) {
+            //         $fileDateConsolidatorCache[$uniqueFileKey] = $incomingDateStr;
+            //     } else {
+            //         // Compare duplicates found within the uploaded spreadsheet file itself
+            //         if ($incomingDateStr !== null) {
+            //             if ($fileDateConsolidatorCache[$uniqueFileKey] === null || Carbon::parse($incomingDateStr)->lt(Carbon::parse($fileDateConsolidatorCache[$uniqueFileKey]))) {
+            //                 $fileDateConsolidatorCache[$uniqueFileKey] = $incomingDateStr;
+            //             }
+            //         }
+            //     }
+            // }
 
             foreach ($validated['products'] as $item) {
                 $productName = trim($item['name']);
@@ -202,7 +202,7 @@ class ProductController extends Controller
                         'stocks'      => $item['stocks'],
                         'category_id' => $matchedCategoryId,   
                         'procurement' => $item['procurement'] ?? 10,
-                        'expired_at'  => Carbon::parse($item['expired_at'])->format('Y-m-d')
+                        'expired_at'  => $item['expired_at'] ? Carbon::parse($item['expired_at'])->format('Y-m-d') : null
                     ]
                 );
                 $syncCounter++;

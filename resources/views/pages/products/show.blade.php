@@ -28,7 +28,7 @@
 
                             <div class="form-group row d-block text-left">
                                 <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Photo') }}</b></label>
-                                @if ($product->cover_image != 'noimage.jpg')
+                                @if ($product->cover_image && $product->cover_image != 'noimage.jpg')
                                     <img class="img-thumbnail rounded" src="/storage/products/{{$product->cover_image}}" alt="">
                                 @else
                                     <span class="ml-5">None</span>
