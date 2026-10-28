@@ -46,7 +46,7 @@
                                 data-srp="{{ $product->srp }}"
                                 data-stocks="{{ $product->stocks }}">
                                 
-                                @if($product->stocks <= ($product->reorder_level ?? 10))
+                                @if($product->stocks <= $product->procurement)
                                     <span class="badge badge-danger position-absolute" style="top: 5px; right: 5px; z-index: 10;">Low Stock</span>
                                 @endif
 
@@ -56,7 +56,7 @@
                                     <img class="img-thumbnail rounded" src="/storage/products/{{$product->cover_image}}" alt="">
                                     </div>
                                     <div>
-                                        <small class="text-xs font-weight-bold text-uppercase text-gray-500 d-block text-truncate">{{ $product->desc }}</small>
+                                        <small class="text-xs font-weight-bold text-uppercase text-gray-500 d-block">{{ $product->desc }}</small>
                                         <h6 class="font-weight-bold text-gray-800 mb-1">{{ $product->name }}</h6>
                                     </div>
                                     <div class="text-primary font-weight-bold mt-1">
@@ -385,7 +385,7 @@
                 let rowHtml = `
                     <tr class="border-bottom">
                         <td class="pl-3 py-2">
-                            <span class="font-weight-bold text-gray-800 d-block text-truncate" style="max-width: 150px;">${item.name}</span>
+                            <span class="font-weight-bold text-gray-800 d-block" style="max-width: 150px;">${item.name}</span>
                             <small class="text-muted d-block text-xs">${item.desc}</small>
                         </td>
                         <td class="text-center py-2">
@@ -528,6 +528,7 @@
                 payment_method: paymentMethodSelect.value,
                 amount_paid: parseFloat(cashReceivedInput.value),
                 change: modalChangeDue.innerText.slice(1),
+                user_id: {{ auth()->id() }},
                 items: cart.map(item => ({
                     product_id: item.id,
                     quantity: item.quantity,

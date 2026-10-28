@@ -54,7 +54,10 @@
                                     <span id="name">{{ $order->created_at ? date('M d, Y D h:i a', strtotime($order->created_at)) : '-'}}</span>
                                 </label>
                             </div>
-
+                            
+                            <div class="form-group row">
+                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Personnel') }}: </b><span>{{$order->user->name}}</span></label>
+                            </div>
                             
                             <div class="form-group row">
                                 <label for="name" class="col-md-12 col-form-label text-md-left"><b>{{ __('Order Items') }}</b></label>
@@ -66,7 +69,11 @@
                                             <tr>
                                                 <th>Product Name</th>
                                                 <th>Quantity</th>
-                                                <th>Unit Cost</th>
+
+                                                @if(Auth::user()->type == 'admin')
+                                                    <th>Unit Cost</th>
+                                                @endif
+
                                                 <th>Unit Price</th>
                                                 <th>Subtotal</th>
                                                 
@@ -80,7 +87,11 @@
                                                 <tr>
                                                     <td><a href="/products/{{$item->product->id}}">{{$item->product->name}}</a></td>
                                                     <td>{{$item->quantity}}</td>
-                                                    <td>{{$item->unit_cost}}</td>
+
+                                                    @if(Auth::user()->type == 'admin')
+                                                        <td>{{$item->unit_cost}}</td>
+                                                    @endif
+
                                                     <td>{{$item->unit_price}}</td>
                                                     <td>{{$item->subtotal}}</td>
                                                     @if(Auth::user()->type == 'admin')

@@ -8,6 +8,7 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
@@ -17,7 +18,15 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('pages.orders.index')->with('orders', Order::orderBy('created_at', 'desc')->get());
+        $orders = null;
+
+        if (auth()->user()->type != 'admin') {
+            $orders = Order::where('user_id', Auth::id())->get();
+        } else {
+            $orders = Order::orderBy('created_at', 'desc')->get();
+        }
+
+        return view('pages.orders.index')->with('orders', $orders);
     }
 
     /**
@@ -81,6 +90,7 @@ class OrderController extends Controller
 
             // 1. Save Main Transaction Header with computed total profit metrics
             $order = Order::create([
+                'user_id'         => $validated['user_id'],
                 'total_amount'    => $subtotal,
                 'discount_amount' => 0.00,
                 'net_amount'      => $netAmount,
@@ -124,6 +134,10 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        if (auth()->user()->type != 'admin' && Auth::id() != $order->user_id) {
+            return redirect()->route('orders.index');
+        }
+
         return view('pages.orders.show')->with('order', $order);
     }
 
