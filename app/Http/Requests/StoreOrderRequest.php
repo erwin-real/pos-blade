@@ -32,7 +32,8 @@ class StoreOrderRequest extends FormRequest
             // 'items.*.product_id' => 'required|exists:products,id',
             'items.*.quantity'   => 'required|integer|min:1',
             'items.*.srp'        => 'required|numeric|min:0',
-            'items.*.name'       => 'required_if:items.*.product_id,0|string|max:255'
+            'items.*.name'       => 'required_if:items.*.product_id,0|string|max:255',
+            'items.*.desc'       => 'nullable|string',
         ];
     }
 }

@@ -622,6 +622,7 @@
                 items: cart.map(item => ({
                     product_id: item.id,
                     name: item.name,
+                    desc: item.desc,
                     quantity: item.quantity,
                     srp: item.srp
                 }))

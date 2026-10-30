@@ -61,6 +61,7 @@ class OrderController extends Controller
                     // 1. Create the new product dynamically
                     $product = Product::create([
                         'name' => $item['name'], // Ensure 'name' is captured from your custom form
+                        'desc' => $item['desc'],          // Created with 0 initial inventory
                         'stocks' => $item['quantity'],          // Created with 0 initial inventory
                         'price' => $item['srp'] * 0.8, // If your POS doesn't ask cashiers for dynamic wholesale cost basis, fall back to retail price (0 profit margin)
                         'srp' => $item['srp'], 
