@@ -36,37 +36,79 @@
                     <!-- Products Grid Grid -->
                     <div class="row" id="products-container">
                         @foreach($products as $product)
-                        <div class="col-6 col-sm-4 col-md-3 mb-3 product-item" data-category="{{ $product->category_id }}">
-                            <!-- Using plain data fields for clean JS mapping -->
-                            <div class="card h-100 shadow-sm border-0 btn p-0 text-left align-baseline position-relative product-card btn-add-to-cart" 
-                                style="cursor: pointer; transition: transform 0.2s;"
-                                data-id="{{ $product->id }}"
-                                data-name="{{ $product->name }}"
-                                data-desc="{{ $product->desc }}"
-                                data-srp="{{ $product->srp }}"
-                                data-stocks="{{ $product->stocks }}">
-                                
-                                @if($product->stocks <= $product->procurement)
-                                    <span class="badge badge-danger position-absolute" style="top: 5px; right: 5px; z-index: 10;">Low Stock</span>
-                                @endif
+                            <div class="col-6 col-sm-4 col-md-3 mb-3 product-item" data-category="{{ $product->category_id }}">
+                                <!-- Using plain data fields for clean JS mapping -->
+                                <div class="card h-100 shadow-sm border-0 btn p-0 text-left align-baseline position-relative product-card btn-add-to-cart" 
+                                    style="cursor: pointer; transition: transform 0.2s;"
+                                    data-id="{{ $product->id }}"
+                                    data-name="{{ $product->name }}"
+                                    data-desc="{{ $product->desc }}"
+                                    data-srp="{{ $product->srp }}"
+                                    data-stocks="{{ $product->stocks }}"
+                                >
+                                    
+                                    @if($product->stocks <= $product->procurement)
+                                        <span class="badge badge-danger position-absolute" style="top: 5px; right: 5px; z-index: 10;">Low Stock</span>
+                                    @endif
 
-                                <div class="card-body p-2 d-flex flex-column justify-content-between text-center">
-                                    <div class="p-3 bg-light rounded mb-2">
-                                        {{-- <i class="fas fa-box fa-2x text-gray-300"></i> --}}
-                                    <img class="img-thumbnail rounded" src="/storage/products/{{$product->cover_image}}" alt="">
+                                    <div class="card-body p-2 d-flex flex-column justify-content-between text-center">
+                                        <div class="p-3 bg-light rounded mb-2">
+                                            {{-- <i class="fas fa-box fa-2x text-gray-300"></i> --}}
+                                        <img class="img-thumbnail rounded" src="/storage/products/{{$product->cover_image}}" alt="">
+                                        </div>
+                                        <div>
+                                            <small class="text-xs font-weight-bold text-uppercase text-gray-500 d-block">{{ $product->desc }}</small>
+                                            <h6 class="font-weight-bold text-gray-800 mb-1">{{ $product->name }}</h6>
+                                        </div>
+                                        <div class="text-primary font-weight-bold mt-1">
+                                            ₱{{ number_format($product->srp, 2) }}
+                                        </div>
+                                        <small class="text-xs text-muted d-block mt-1">Stock: {{ $product->stocks }}</small>
                                     </div>
-                                    <div>
-                                        <small class="text-xs font-weight-bold text-uppercase text-gray-500 d-block">{{ $product->desc }}</small>
-                                        <h6 class="font-weight-bold text-gray-800 mb-1">{{ $product->name }}</h6>
-                                    </div>
-                                    <div class="text-primary font-weight-bold mt-1">
-                                        ₱{{ number_format($product->srp, 2) }}
-                                    </div>
-                                    <small class="text-xs text-muted d-block mt-1">Stock: {{ $product->stocks }}</small>
                                 </div>
                             </div>
-                        </div>
                         @endforeach
+
+                        <div id="no-products-placeholder" style="display: none; text-align: center; padding: 40px 20px;">
+                            <p class="text-muted">No matching products found.</p>
+                            <button type="button" id="open-custom-product-btn" class="btn btn-primary">
+                                + Add Custom/Quick Product
+                            </button>
+                        </div>
+
+                        <!-- 2. The Modal Overlay & Form Structure -->
+                        <div id="custom-product-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1050; align-items: center; justify-content: center;">
+                            <div style="background: white; padding: 25px; border-radius: 8px; width: 100%; max-width: 400px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                                <h4 style="margin-top: 0; margin-bottom: 20px;">Add Custom Product</h4>
+                                
+                                <form id="custom-product-form">
+                                    <div style="margin-bottom: 15px;">
+                                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Product Name</label>
+                                        <input type="text" id="modal-p-name" required style="width: 100%; padding: 8px; box-sizing: border-box;" placeholder="e.g., Name of product">
+                                    </div>
+
+                                    <div style="margin-bottom: 15px;">
+                                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Product Description</label>
+                                        <input type="text" id="modal-p-desc" style="width: 100%; padding: 8px; box-sizing: border-box;" placeholder="e.g., 10ml, 50g">
+                                    </div>
+                                    
+                                    <div style="margin-bottom: 15px;">
+                                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Quantity</label>
+                                        <input type="number" id="modal-p-qty" value="1" min="1" required style="width: 100%; padding: 8px; box-sizing: border-box;">
+                                    </div>
+                                    
+                                    <div style="margin-bottom: 20px;">
+                                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Price</label>
+                                        <input type="number" id="modal-p-price" step="0.01" min="0" required style="width: 100%; padding: 8px; box-sizing: border-box;" placeholder="0.00">
+                                    </div>
+                                    
+                                    <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                                        <button type="button" id="close-modal-btn" class="btn btn-secondary" style="padding: 8px 15px; cursor: pointer;">Cancel</button>
+                                        <button type="submit" class="btn btn-success" style="padding: 8px 15px; cursor: pointer;">Add to Cart</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -227,6 +269,12 @@
         const checkoutBtn = document.getElementById('checkout-btn');
         const clearCartBtn = document.getElementById('btn-clear-cart');
 
+        const placeholderContainer = document.getElementById('no-products-placeholder');
+        const openModalBtn = document.getElementById('open-custom-product-btn');
+        const customModal = document.getElementById('custom-product-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const customProductForm = document.getElementById('custom-product-form');
+
         // ==========================================
         // 1. ADD TO CART EVENT HANDLER
         // ==========================================
@@ -273,6 +321,7 @@
         // ==========================================
         function filterProducts() {
             const searchVal = searchInput.value.toLowerCase().trim();
+            let visibleCount = 0;
 
             productItems.forEach(item => {
                 const itemCategory = item.getAttribute('data-category');
@@ -284,24 +333,65 @@
 
                 if (matchesSearch && matchesCategory) {
                     item.style.display = "";
+                    visibleCount++;
                 } else {
                     item.style.display = "none";
                 }
             });
+
+            if (visibleCount === 0) {
+                placeholderContainer.style.display = "block";
+            } else {
+                placeholderContainer.style.display = "none";
+            }
         }
+
+        openModalBtn.addEventListener('click', () => {
+            // Optional: Pre-fill modal name input field with the user's active search query
+            document.getElementById('modal-p-name').value = searchInput.value.trim();
+            
+            customModal.style.display = "flex";
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            closeAndResetModal();
+        });
+
+        function closeAndResetModal() {
+            customModal.style.display = "none";
+            customProductForm.reset(); // Clears input fields automatically
+        }
+
+        // 3. Form Submit -> Add to Shopping Cart Logic
+        customProductForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevents page reload
+
+            // Grab values from the modal inputs
+            const customItem = {
+                id: 0,
+                name: document.getElementById('modal-p-name').value,
+                desc: document.getElementById('modal-p-desc').value,
+                srp: parseFloat(document.getElementById('modal-p-price').value),
+                quantity: parseInt(document.getElementById('modal-p-qty').value),
+                max_stock: 100000
+            };
+
+            processCartAddition(customItem);
+            closeAndResetModal();
+        });
 
         // ==========================================
         // CART ENGINE OPERATIONS
         // ==========================================
         function processCartAddition(product) {
-            if (product.stocks <= 0) {
+            if (product.stocks <= 0 && product.id !=0) {
                 alert('This product is out of stock!');
                 return;
             }
 
             let existingItem = cart.find(item => item.id === product.id);
 
-            if (existingItem) {
+            if (existingItem && product.id !=0) {
                 if (existingItem.quantity >= product.stocks) {
                     alert('Cannot exceed available warehouse stock limit.');
                     return;
@@ -313,7 +403,7 @@
                     name: product.name,
                     desc: product.desc,
                     srp: product.srp,
-                    quantity: 1,
+                    quantity: product.quantity ?? 1,
                     max_stock: product.stocks
                 });
             }
@@ -323,7 +413,7 @@
         // Expose utility controls globally to handle table inner loop strings securely
         window.updateQuantity = function(productId, newQty) {
             let item = cart.find(item => item.id === productId);
-            if (!item) return;
+            if (productId != 0 && !item) return;
 
             newQty = parseInt(newQty);
 
@@ -531,6 +621,7 @@
                 user_id: {{ auth()->id() }},
                 items: cart.map(item => ({
                     product_id: item.id,
+                    name: item.name,
                     quantity: item.quantity,
                     srp: item.srp
                 }))

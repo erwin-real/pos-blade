@@ -40,11 +40,11 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Description') }}: </b><span>{{$product->desc}}</span></label>
+                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Description') }}: </b><span>{{$product->desc ?? '-' }}</span></label>
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Category') }}: </b><span>{{$product->category->name}}</span></label>
+                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Category') }}: </b><span>{{$product->category->name ?? '-' }}</span></label>
                             </div>
 
                             <div class="form-group row">
@@ -55,7 +55,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Procurement') }}: </b><span>{{$product->procurement}}</span></label>
+                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Procurement') }}: </b><span>{{$product->procurement ?? '-' }}</span></label>
                             </div>
 
                             <div class="form-group row">

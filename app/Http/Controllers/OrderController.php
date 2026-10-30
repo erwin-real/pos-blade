@@ -35,9 +35,7 @@ class OrderController extends Controller
     public function create()
     {
         return view('pages.orders.create')->with([
-            "products" => Product::where('stocks', '>', 0)
-                            ->orderBy('name')
-                            ->get(),
+            "products" => Product::orderBy('name')->get(),
             "categories" => Category::orderBy('name')->get()
         ]);
     }
@@ -58,10 +56,30 @@ class OrderController extends Controller
             $itemsPayloadData = [];
 
             foreach ($validated['items'] as $item) {
-                $product = Product::lockForUpdate()->find($item['product_id']);
+                // Check if this is a custom on-the-fly product
+                if (empty($item['product_id']) || $item['product_id'] == 0) {
+                    // 1. Create the new product dynamically
+                    $product = Product::create([
+                        'name' => $item['name'], // Ensure 'name' is captured from your custom form
+                        'stocks' => $item['quantity'],          // Created with 0 initial inventory
+                        'price' => $item['srp'] * 0.8, // If your POS doesn't ask cashiers for dynamic wholesale cost basis, fall back to retail price (0 profit margin)
+                        'srp' => $item['srp'], 
+                        // Add other required default fields for your system here (e.g., code, category_id)
+                    ]);
+                    
+                    // Set quantity to 0 on database level so decrementing below won't trigger negative stock checks if your models guard it, 
+                    // OR leave it at 0 to explicitly show a temporary -qty stock deviation until back-office reconciles it.
+                } else {
+                    // Fetch existing standard inventory item
+                    $product = Product::lockForUpdate()->find($item['product_id']);
 
-                if ($product->stocks < $item['quantity']) {
-                    throw new Exception("Insufficient stock for item: {$product->name}");
+                    if (!$product) {
+                        throw new Exception("Product ID {$item['product_id']} not found.");
+                    }
+
+                    if ($product->stocks < $item['quantity']) {
+                        throw new Exception("Insufficient stock for item: {$product->name}");
+                    }
                 }
 
                 // Calculate math values using backend database records
