@@ -49,6 +49,8 @@ class ProductController extends Controller
 
         $data['cover_image'] = $fileNameToStore;
 
+        $data['price'] ??= ceil($data['srp'] * .8);
+
         $product = Product::create($data);
 
         return redirect()->route('products.show', $product);
@@ -96,6 +98,7 @@ class ProductController extends Controller
             $data['cover_image'] = $fileNameToStore;
         }
 
+        $data['price'] ??= ceil($data['srp'] * .8);
         $product->update($data);
 
         return redirect()->route('products.show', $product);
