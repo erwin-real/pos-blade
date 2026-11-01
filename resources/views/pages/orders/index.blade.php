@@ -16,7 +16,60 @@
 
             <div class="row">
                 <div class="container-fluid">
+                    
+                    <div class="card bg-light mb-4 shadow-sm">
+                        <div class="card-body">
+                            
+                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                <div>
+                                    <h5 class="card-title text-muted text-uppercase small font-weight-bold">
+                                        Total Sales for {{ \Carbon\Carbon::parse($selectedDate)->format('M d, Y') }}
+                                    </h5>
+                                    <h2 class="text-success font-weight-bold mb-0">
+                                        ₱{{ (number_format($totalSalesSum, 2)) }}
+                                    </h2>
+                                </div>
+                                
+                                <form action="{{ url()->current() }}" method="GET" class="d-flex align-items-center gap-2">
+
+                                    @if (Auth::user()->type == 'admin')
+                                        <div class="mr-4">
+                                            <label for="user-picker" class="fw-bold mb-0 text-nowrap">Cashier:</label>
+                                            <select id="user-picker" 
+                                                    name="user_id" 
+                                                    class="form-control" 
+                                                    onchange="this.form.submit()"> <!-- 👈 Autosubmits when user switches -->
+                                                <option value="all" {{ $selectedUserId == 'all' ? 'selected' : '' }}>All Staff</option>
+                                                @foreach ($users as $user)
+                                                    <option value="{{ $user->id }}" {{ $selectedUserId == $user->id ? 'selected' : '' }}>
+                                                        {{ $user->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    @endif
+
+                                    <div>
+                                        <label for="date-picker" class="fw-bold mb-0 mr-2 text-nowrap">Filter Date:</label>
+                                        <input
+                                            type="date" 
+                                            id="date-picker" 
+                                            name="date" 
+                                            value="{{ $selectedDate }}" 
+                                            class="form-control"
+                                            onchange="this.form.submit()"
+                                        >
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                        
+                    </div>
+                    
                     <div class="card shadow mb-4">
+
+                        <!-- Summary Total Card -->
                         <div class="card-header py-3">
                             <h5 class="float-left m-0 font-weight-bold text-primary">Records</h5>
                             <a href="/orders/create" class="btn btn-outline-primary float-right"><i class="fas fa-plus"></i> New Order</a>
@@ -29,6 +82,7 @@
                                     <thead>
                                         <tr>
                                             <th>Date</th>
+                                            <th>Products Sold</th>
                                             <th>Total</th>
                                             <th>Amount Received</th>
                                             <th>Change</th>
@@ -38,6 +92,7 @@
                                     <tfoot>
                                         <tr>
                                             <th>Date</th>
+                                            <th>Products Sold</th>
                                             <th>Total</th>
                                             <th>Amount Received</th>
                                             <th>Change</th>
@@ -48,6 +103,18 @@
                                         @foreach ($orders as $order)
                                             <tr>
                                                 <td><a href="/orders/{{ $order->id }}">{{ date('M d, Y D h:i a', strtotime($order->created_at)) }}</a></td>
+
+                                                <td>
+                                                    <ul class="list-unstyled mb-0 small">
+                                                        @foreach($order->order_items as $item)
+                                                            <li>
+                                                                <span class="text-muted">{{ $item->quantity }}x</span> 
+                                                                {{ $item->product->name ?? 'Custom Product/Deleted Item' }}
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </td>
+
                                                 <td>{{ $order->total_amount }}</td>
                                                 <td>{{ $order->amount_received }}</td>
                                                 <td>{{ $order->change }}</td>

@@ -7,6 +7,8 @@ use App\Models\Category;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,17 +18,32 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $orders = null;
+        $selectedUserId = null;
+        $users = null;
+        $selectedDate = $request->input('date', Carbon::today()->toDateString());
+        $ordersQuery = Order::whereDate('created_at', $selectedDate);
 
         if (auth()->user()->type != 'admin') {
-            $orders = Order::where('user_id', Auth::id())->get();
+            $orders = $ordersQuery->where('user_id', Auth::id())->with('order_items.product')->get();
+            $totalSalesSum = $ordersQuery->where('user_id', Auth::id())->sum('total_amount');
         } else {
-            $orders = Order::orderBy('created_at', 'desc')->get();
+            $users = User::orderBy('name', 'asc')->get();
+            $selectedUserId = $request->input('user_id', 'all');
+            
+            $ordersQuery->when($selectedUserId !== 'all', function ($query) use ($selectedUserId) {
+                return $query->where('user_id', $selectedUserId);
+            });
+
+            $orders = $ordersQuery->with(['user', 'order_items.product'])->get();
+            $totalSalesSum = $ordersQuery->sum('total_amount');
         }
 
-        return view('pages.orders.index')->with('orders', $orders);
+        return view('pages.orders.index', compact(
+            'selectedDate', 'users', 'selectedUserId', 'orders', 'totalSalesSum'
+        ));
     }
 
     /**
