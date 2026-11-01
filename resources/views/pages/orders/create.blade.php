@@ -63,7 +63,7 @@
                                         <div class="text-primary font-weight-bold mt-1">
                                             ₱{{ number_format($product->srp, 2) }}
                                         </div>
-                                        <small class="text-xs text-muted d-block mt-1">Stock: {{ $product->stocks }}</small>
+                                        <small class="text-xs d-block mt-1 {{ $product->stocks < 1 ? 'text-danger font-weight-bolder' : 'text-muted' }}">Stock: {{ $product->stocks }}</small>
                                     </div>
                                 </div>
                             </div>
@@ -384,18 +384,14 @@
         // CART ENGINE OPERATIONS
         // ==========================================
         function processCartAddition(product) {
-            if (product.stocks <= 0 && product.id !=0) {
-                alert('This product is out of stock!');
-                return;
-            }
 
             let existingItem = cart.find(item => item.id === product.id);
 
             if (existingItem && product.id !=0) {
-                if (existingItem.quantity >= product.stocks) {
-                    alert('Cannot exceed available warehouse stock limit.');
-                    return;
-                }
+                // if (existingItem.quantity >= product.stocks) {
+                //     alert('Cannot exceed available warehouse stock limit.');
+                //     return;
+                // }
                 existingItem.quantity += 1;
             } else {
                 cart.push({
@@ -422,12 +418,13 @@
                 return;
             }
 
-            if (newQty > item.max_stock) {
-                alert('Cannot exceed available warehouse stock limit.');
-                item.quantity = item.max_stock;
-            } else {
-                item.quantity = newQty;
-            }
+            item.quantity = newQty;
+            // if (newQty > item.max_stock) {
+            //     alert('Cannot exceed available warehouse stock limit.');
+            //     item.quantity = item.max_stock;
+            // } else {
+            //     item.quantity = newQty;
+            // }
             renderCart();
         };
 

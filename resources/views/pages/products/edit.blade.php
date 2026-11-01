@@ -86,7 +86,7 @@
                                 <label for="stocks" class="col-md-12 col-form-label text-md-left">{{ __('Stocks') }} <span class="text-danger">*</span></label>
 
                                 <div class="col-md-12">
-                                    <input id="stocks" type="number" value="{{ $product->stocks }}" class="form-control{{ $errors->has('stocks') ? ' is-invalid' : '' }}" required name="stocks" required autofocus>
+                                    <input id="stocks" type="number" value="{{ $product->stocks }}" class="form-control{{ $errors->has('stocks') ? ' is-invalid' : '' }}" required name="stocks" autofocus>
 
                                     @if ($errors->has('stocks'))
                                         <span class="invalid-feedback" role="alert">

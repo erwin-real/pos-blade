@@ -133,7 +133,7 @@ class ProductController extends Controller
             'products.*.desc' => 'required|string|max:100',
             'products.*.srp' => 'required|numeric|min:0',
             'products.*.price' => 'required|numeric|min:0', 
-            'products.*.stocks' => 'required|integer|min:0',
+            'products.*.stocks' => 'required|integer',
             'products.*.category' => 'required|string',
             'products.*.procurement' => 'nullable|integer',
             'products.*.expired_at' => 'nullable|date_format:Y-m-d' // 👈 Validate custom incoming date pattern

@@ -78,9 +78,9 @@ class OrderController extends Controller
                         throw new Exception("Product ID {$item['product_id']} not found.");
                     }
 
-                    if ($product->stocks < $item['quantity']) {
-                        throw new Exception("Insufficient stock for item: {$product->name}");
-                    }
+                    // if ($product->stocks < $item['quantity']) {
+                    //     throw new Exception("Insufficient stock for item: {$product->name}");
+                    // }
                 }
 
                 // Calculate math values using backend database records
