@@ -196,8 +196,19 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Order $order)
     {
-        //
+        foreach ($order->order_items as $item) {
+            $product = Product::lockForUpdate()->find($item->product_id);
+
+            if ($product) {
+                $product->increment('stocks', $item->quantity);
+            }
+
+            $item->delete();
+        }
+
+        $order->delete();
+        return redirect()->route('orders.index');
     }
 }

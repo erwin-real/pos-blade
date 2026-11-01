@@ -105,15 +105,13 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="mt-4">
-                                <a href="{{ route('orders.edit', $order) }}" class="btn btn-outline-info float-left mr-2"><i class="fa fa-pencil-alt"></i> Edit</a>
-
+                            <div class="mt-4">
                                 <button class="btn btn-outline-danger" data-toggle="modal" data-target="#delOrderModal">
                                     <i class="fas fa-trash fa-sm fa-fw"></i>
                                     Delete
                                 </button>
                                 <div class="clearfix"></div>
-                            </div> --}}
+                            </div>
                             
                         </div>
 
