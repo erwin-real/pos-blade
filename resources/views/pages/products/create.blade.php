@@ -37,8 +37,8 @@
 
                                     @if ($errors->has('name'))
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('name') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                             </div>
@@ -58,8 +58,8 @@
 
                                     @if ($errors->has('category'))
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('category') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('category') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                             </div>
@@ -73,8 +73,8 @@
 
                                     @if ($errors->has('desc'))
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('desc') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('desc') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                             </div>
@@ -88,38 +88,38 @@
 
                                     @if ($errors->has('stocks'))
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('stocks') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('stocks') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                             </div>
 
                             {{-- PROCUREMENT --}}
                             <div class="form-group row">
-                                <label for="procurement" class="col-md-12 col-form-label text-md-left">{{ __('Procurement') }} <span class="text-danger">*</span></label>
+                                <label for="procurement" class="col-md-12 col-form-label text-md-left">{{ __('Procurement') }}</label>
 
                                 <div class="col-md-12">
-                                    <input id="procurement" type="number" class="form-control{{ $errors->has('procurement') ? ' is-invalid' : '' }}" name="procurement" required autofocus>
+                                    <input id="procurement" type="number" class="form-control{{ $errors->has('procurement') ? ' is-invalid' : '' }}" name="procurement" autofocus>
 
                                     @if ($errors->has('procurement'))
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('procurement') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('procurement') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                             </div>
 
                             {{-- PRICE --}}
                             <div class="form-group row">
-                                <label for="price" class="col-md-12 col-form-label text-md-left">{{ __('Cost') }} <span class="text-danger">*</span></label>
+                                <label for="price" class="col-md-12 col-form-label text-md-left">{{ __('Cost') }}</label>
 
                                 <div class="col-md-12">
-                                    <input id="price" type="number" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" autofocus required>
+                                    <input id="price" type="number" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" autofocus>
 
                                     @if ($errors->has('price'))
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('price') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('price') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                             </div>
@@ -133,8 +133,8 @@
 
                                     @if ($errors->has('srp'))
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('srp') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('srp') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                             </div>
@@ -149,8 +149,8 @@
 
                                     @if ($errors->has('expired_at'))
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('expired_at') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('expired_at') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                             </div>

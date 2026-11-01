@@ -59,11 +59,11 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Cost') }}: </b><span>PHP {{$product->price}}</span></label>
+                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('Cost') }}: </b><span>{{ $product->price ? '₱ '.$product->price : '-'}}</span></label>
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('SRP') }}: </b><span>PHP {{$product->srp}}</span></label>
+                                <label class="col-md-12 col-form-label text-md-left"><b>{{ __('SRP') }}: </b><span>₱ {{$product->srp}}</span></label>
                             </div>
 
                             <div class="form-group row">

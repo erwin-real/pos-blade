@@ -27,10 +27,10 @@ class UpdateProductRequest extends FormRequest
             'category_id' => ['required', 'exists:categories,id'],
             'desc' => ['nullable', 'string'],
             'stocks' => ['required', 'integer'],
-            'price' => ['required', 'numeric', 'min:0.01'],
+            'price' => ['nullable', 'numeric', 'min:0.01'],
             'srp' => ['required', 'numeric', 'min:0.01'],
             'expired_at' => ['nullable'],
-            'procurement' => ['required', 'integer'],
+            'procurement' => ['nullable', 'integer'],
             'cover_image' => ['nullable', 'image', 'max:2048']            
         ];
     }

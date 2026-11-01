@@ -98,10 +98,10 @@
 
                             {{-- PROCUREMENT --}}
                             <div class="form-group row">
-                                <label for="procurement" class="col-md-12 col-form-label text-md-left">{{ __('Procurement') }} <span class="text-danger">*</span></label>
+                                <label for="procurement" class="col-md-12 col-form-label text-md-left">{{ __('Procurement') }}</label>
 
                                 <div class="col-md-12">
-                                    <input id="procurement" type="number" value="{{ $product->procurement }}" class="form-control{{ $errors->has('procurement') ? ' is-invalid' : '' }}" name="procurement" required autofocus>
+                                    <input id="procurement" type="number" value="{{ $product->procurement }}" class="form-control{{ $errors->has('procurement') ? ' is-invalid' : '' }}" name="procurement" autofocus>
 
                                     @if ($errors->has('procurement'))
                                         <span class="invalid-feedback" role="alert">
@@ -111,12 +111,12 @@
                                 </div>
                             </div>
 
-                            {{-- PRICE --}}
+                            {{-- PRICE / COST--}}
                             <div class="form-group row">
-                                <label for="price" class="col-md-12 col-form-label text-md-left">{{ __('Cost') }} <span class="text-danger">*</span></label>
+                                <label for="price" class="col-md-12 col-form-label text-md-left">{{ __('Cost') }} </label>
 
                                 <div class="col-md-12">
-                                    <input id="price" type="number" value="{{ $product->price }}" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" autofocus required>
+                                    <input id="price" type="number" value="{{ $product->price }}" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" autofocus>
 
                                     @if ($errors->has('price'))
                                         <span class="invalid-feedback" role="alert">
