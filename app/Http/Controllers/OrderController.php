@@ -41,8 +41,11 @@ class OrderController extends Controller
             $totalSalesSum = $ordersQuery->sum('total_amount');
         }
 
+        $totalCashSales = $orders->where('payment_method', 'Cash')->sum('total_amount');
+        $totalGCashSales = $orders->where('payment_method', 'GCash')->sum('total_amount');
+
         return view('pages.orders.index', compact(
-            'selectedDate', 'users', 'selectedUserId', 'orders', 'totalSalesSum'
+            'selectedDate', 'users', 'selectedUserId', 'orders', 'totalSalesSum', 'totalCashSales', 'totalGCashSales'
         ));
     }
 
