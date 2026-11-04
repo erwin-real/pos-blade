@@ -75,7 +75,28 @@
                 </div>
             </div>
         </div>
+        
+        <div class="row">
+            <div class="col-12">
 
+                <!-- Area Chart -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Total sales for the past 30 days</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-area">
+                            <canvas id="myBarChart"></canvas>
+                        </div>
+                        {{-- <hr>
+                        Styling for the area chart can be found in the
+                        <code>/js/demo/chart-area-demo.js</code> file. --}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
         <!-- ROW 2: DETAILED ANALYTICS AND TOP SELLING DATA TABLES -->
         <div class="row">
             <!-- Top 5 Best Selling Products Table -->
@@ -140,5 +161,10 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            const labels = {!! json_encode($graphLabels) !!};
+            const dataValues = {!! json_encode($graphValues) !!};
+        </script>
 
 </x-app-layout>

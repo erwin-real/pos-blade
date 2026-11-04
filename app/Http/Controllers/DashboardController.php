@@ -57,7 +57,7 @@ class DashboardController extends Controller
         // 2. Fetch the actual daily database profit records group totals
         $historicalSales = Order::select(
                 DB::raw('DATE(created_at) as sales_date'),
-                DB::raw('SUM(total_profit) as daily_profit')
+                DB::raw('SUM(total_amount) as daily_profit')
             )
             ->where('created_at', '>=', Carbon::today()->subDays(29)->startOfDay())
             ->groupBy('sales_date')
