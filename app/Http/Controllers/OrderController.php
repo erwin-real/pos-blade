@@ -86,6 +86,7 @@ class OrderController extends Controller
                         'stocks' => $item['quantity'],          // Created with 0 initial inventory
                         'price' => $item['srp'] * 0.8, // If your POS doesn't ask cashiers for dynamic wholesale cost basis, fall back to retail price (0 profit margin)
                         'srp' => $item['srp'], 
+                        'procurement' => 1
                         // Add other required default fields for your system here (e.g., code, category_id)
                     ]);
                     

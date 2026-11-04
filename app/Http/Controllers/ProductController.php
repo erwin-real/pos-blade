@@ -51,6 +51,8 @@ class ProductController extends Controller
 
         $data['price'] ??= ceil($data['srp'] * .8);
 
+        $data['procurement'] ??= 1;
+
         $product = Product::create($data);
 
         return redirect()->route('products.show', $product);
