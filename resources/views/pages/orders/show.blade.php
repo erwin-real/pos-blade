@@ -50,7 +50,7 @@
 
                             <div class="form-group row">
                                 <label class="col-md-12 col-form-label text-md-left">
-                                    <b>{{ __('Date Created') }}: </b>
+                                    <b>{{ __('Order Date') }}: </b>
                                     <span id="name">{{ $order->created_at ? date('M d, Y D h:i a', strtotime($order->created_at)) : '-'}}</span>
                                 </label>
                             </div>
@@ -106,6 +106,7 @@
                             </div>
 
                             <div class="mt-4">
+                                <a href="{{ route('orders.edit', $order) }}" class="btn btn-outline-info float-left mr-2"><i class="fa fa-pencil-alt"></i> Edit</a>
                                 <button class="btn btn-outline-danger" data-toggle="modal" data-target="#delOrderModal">
                                     <i class="fas fa-trash fa-sm fa-fw"></i>
                                     Delete

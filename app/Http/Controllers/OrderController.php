@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOrderRequest;
+use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Category;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -183,17 +184,31 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Order $order)
     {
-        //
+        if (auth()->user()->type != 'admin' && Auth::id() != $order->user_id) {
+            return redirect()->route('orders.index');
+        }
+
+        return view('pages.orders.edit')->with('order', $order);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateOrderRequest $request, Order $order)
     {
-        //
+        $data = $request->validated();
+
+        $originalTime = Carbon::parse($order->created_at)->toTimeString();
+
+        $order->created_at = Carbon::parse($data['created_at'] . ' ' . $originalTime);
+
+        $order->payment_method = $data['payment_method'];
+
+        $order->save(['timestamps' => false]);
+
+        return redirect()->route('orders.show', $order);
     }
 
     /**
