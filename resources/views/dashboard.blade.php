@@ -19,7 +19,7 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Profit (Today)</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">₱{{ number_format($dailyProfit, 2) }}</div>
-                                <small class="text-muted text-xs">Revenue: ₱{{ number_format($dailyRevenue, 2) }}</small>
+                                <small class="text-muted text-xs">Total Sales: ₱{{ number_format($dailyRevenue, 2) }}</small>
                             </div>
                             <div class="col-auto"><i class="fas fa-calendar-day fa-2x text-gray-300"></i></div>
                         </div>
@@ -33,8 +33,9 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Profit (This Week)</div>
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Profit (last 7 days)</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">₱{{ number_format($weeklyProfit, 2) }}</div>
+                                <small class="text-muted text-xs">Total Sales: ₱{{ number_format($weeklyRevenue, 2) }}</small>
                             </div>
                             <div class="col-auto"><i class="fas fa-calendar-week fa-2x text-gray-300"></i></div>
                         </div>
@@ -48,8 +49,9 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Profit (This Month)</div>
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Profit (last 30 days)</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">₱{{ number_format($monthlyProfit, 2) }}</div>
+                                <small class="text-muted text-xs">Total Sales: ₱{{ number_format($monthlyRevenue, 2) }}</small>
                             </div>
                             <div class="col-auto"><i class="fas fa-chart-line fa-2x text-gray-300"></i></div>
                         </div>

@@ -21,11 +21,13 @@ class DashboardController extends Controller
 
         // 1. Multi-Period Profit Calculations
         $dailyProfit = Order::whereDate('created_at', Carbon::today())->sum('total_profit');
-        $weeklyProfit = Order::whereBetween('created_at', [$now->startOfWeek()->toDateTimeString(), $now->endOfWeek()->toDateTimeString()])->sum('total_profit');
-        $monthlyProfit = Order::whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->sum('total_profit');
+        $weeklyProfit = Order::whereBetween('created_at', [Carbon::now()->subDays(6)->startOfDay(), Carbon::now()->endOfDay()])->sum('total_profit');
+        $monthlyProfit = Order::whereBetween('created_at', [Carbon::now()->subDays(29)->startOfDay(), Carbon::now()->endOfDay()])->sum('total_profit');
 
         // 2. Relevant Operational Info Additions (Revenue & Counters)
-        $dailyRevenue = Order::whereDate('created_at', Carbon::today())->sum('net_amount');
+        $dailyRevenue = Order::whereDate('created_at', Carbon::today())->sum('total_amount');
+        $weeklyRevenue = Order::whereBetween('created_at', [Carbon::now()->subDays(6)->startOfDay(), Carbon::now()->endOfDay()])->sum('total_amount');
+        $monthlyRevenue = Order::whereBetween('created_at', [Carbon::now()->subDays(29)->startOfDay(), Carbon::now()->endOfDay()])->sum('total_amount');
         $lowStockCount = Product::whereRaw('stocks <= procurement')->count();
         $totalTransactionsToday = Order::whereDate('created_at', Carbon::today())->count();
 
@@ -38,7 +40,7 @@ class DashboardController extends Controller
             ->get();
 
         // 4. Payment Method Operational Breakdown
-        $paymentBreakdown = Order::select('payment_method', DB::raw('count(*) as count'), DB::raw('SUM(net_amount) as total'))
+        $paymentBreakdown = Order::select('payment_method', DB::raw('count(*) as count'), DB::raw('SUM(total_amount) as total'))
             ->whereMonth('created_at', Carbon::now()->month)
             ->groupBy('payment_method')
             ->get();
@@ -77,7 +79,8 @@ class DashboardController extends Controller
         return view('dashboard', compact(
             'dailyProfit', 'weeklyProfit', 'monthlyProfit', 
             'dailyRevenue', 'lowStockCount', 'totalTransactionsToday',
-            'topProducts', 'paymentBreakdown', 'graphLabels', 'graphValues'
+            'topProducts', 'paymentBreakdown', 'graphLabels',
+            'graphValues', 'weeklyRevenue', 'monthlyRevenue'
         ));
     }
 }
