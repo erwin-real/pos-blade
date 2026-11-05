@@ -25,7 +25,7 @@
                                 </h5>
                                 <div class="row g-3 mb-4">
                                     <!-- 1. All Combined Transactions -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 mb-3">
                                         <div class="card border-0 shadow-sm border-left-info">
                                             <div class="card-body">
                                                 <h6 class="card-title text-muted text-uppercase small font-weight-bold">
@@ -39,7 +39,7 @@
                                     </div>
 
                                     <!-- 2. Cash Vault Summary -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 mb-3">
                                         <div class="card border-0 shadow-sm border-left-success">
                                             <div class="card-body">
                                                 <h6 class="card-title text-muted text-uppercase small font-weight-bold">

@@ -62,46 +62,47 @@
                             <div class="form-group row">
                                 <label for="name" class="col-md-12 col-form-label text-md-left"><b>{{ __('Order Items') }}</b></label>
 
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                            <thead>
+                            </div>
+                            
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th>Product Name</th>
+                                            <th>Quantity</th>
+
+                                            @if(Auth::user()->type == 'admin')
+                                                <th>Unit Cost</th>
+                                            @endif
+
+                                            <th>Unit Price</th>
+                                            <th>Subtotal</th>
+                                            
+                                            @if(Auth::user()->type == 'admin')
+                                                <th>Item Profit</th>
+                                            @endif
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($order->order_items as $item)
                                             <tr>
-                                                <th>Product Name</th>
-                                                <th>Quantity</th>
+                                                <td><a href="/products/{{$item->product->id}}">{{$item->product->name}}</a></td>
+                                                <td>{{$item->quantity}}</td>
 
                                                 @if(Auth::user()->type == 'admin')
-                                                    <th>Unit Cost</th>
+                                                    <td>{{$item->unit_cost}}</td>
                                                 @endif
 
-                                                <th>Unit Price</th>
-                                                <th>Subtotal</th>
-                                                
+                                                <td>{{$item->unit_price}}</td>
+                                                <td>{{$item->subtotal}}</td>
                                                 @if(Auth::user()->type == 'admin')
-                                                    <th>Item Profit</th>
+                                                    <td>{{$item->item_profit}}</td>
                                                 @endif
                                             </tr>
-                                            </thead>
-                                            <tbody>
-                                            @foreach($order->order_items as $item)
-                                                <tr>
-                                                    <td><a href="/products/{{$item->product->id}}">{{$item->product->name}}</a></td>
-                                                    <td>{{$item->quantity}}</td>
-
-                                                    @if(Auth::user()->type == 'admin')
-                                                        <td>{{$item->unit_cost}}</td>
-                                                    @endif
-
-                                                    <td>{{$item->unit_price}}</td>
-                                                    <td>{{$item->subtotal}}</td>
-                                                    @if(Auth::user()->type == 'admin')
-                                                        <td>{{$item->item_profit}}</td>
-                                                    @endif
-                                                </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
 

@@ -37,36 +37,36 @@
                             
                             <div class="form-group row">
                                 <label for="name" class="col-md-12 col-form-label text-md-left"><b>{{ __('Products') }}</b></label>
-
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                            <thead>
+                            </div>
+                        
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Stocks</th>
+                                            <th>Procurement</th>
+                                            <th>Price</th>
+                                            <th>SRP</th>
+                                            <th>Exp date</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($category->products as $product)
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Description</th>
-                                                <th>Stocks</th>
-                                                <th>Procurement</th>
-                                                <th>Price</th>
-                                                <th>SRP</th>
-                                                <th>Exp date</th>
+                                                <td><a href="/products/{{$product->id}}">{{$product->name}}</a></td>
+                                                <td>{{$product->desc}}</td>
+                                                <td>{{$product->stocks}}</td>
+                                                <td>{{$product->procurement}}</td>
+                                                <td>{{$product->price}}</td>
+                                                <td>{{$product->srp}}</td>
+                                                <td>{{$product->expired_at ? date('D M d, Y', strtotime($product->expired_at)) : '-'}}</td>
                                             </tr>
-                                            </thead>
-                                            <tbody>
-                                            @foreach($category->products as $product)
-                                                <tr>
-                                                    <td><a href="/products/{{$product->id}}">{{$product->name}}</a></td>
-                                                    <td>{{$product->desc}}</td>
-                                                    <td>{{$product->stocks}}</td>
-                                                    <td>{{$product->procurement}}</td>
-                                                    <td>{{$product->price}}</td>
-                                                    <td>{{$product->srp}}</td>
-                                                    <td>{{$product->expired_at ? date('D M d, Y', strtotime($product->expired_at)) : '-'}}</td>
-                                                </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
 

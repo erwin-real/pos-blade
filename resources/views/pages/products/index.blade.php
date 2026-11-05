@@ -19,8 +19,10 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h5 class="float-left m-0 font-weight-bold text-primary">Records</h5>
-                            <a href="/products/create" class="btn btn-outline-primary float-right"><i class="fas fa-plus"></i> Add Product</a>
-                            <a href="/products/import" class="btn btn-outline-success float-right mr-3"><i class="fas fa-file-import"></i> Import products</a>
+                            <div class="float-right">
+                                <a href="/products/create" class="btn btn-outline-primary"><i class="fas fa-plus"></i> Add Product</a>
+                                <a href="/products/import" class="btn btn-outline-success mr-3"><i class="fas fa-file-import"></i> Import products</a>
+                            </div>
                             <div class="clearfix"></div>
                         </div>
         
