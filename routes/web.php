@@ -14,14 +14,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/products/import', [ProductController::class, 'importProducts']);
     Route::post('/products/import', [ProductController::class, 'importBatch']);
+    Route::get('/orders/{id}/print-receipt', [OrderController::class, 'print']);
 
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
     Route::resource('orders', OrderController::class);
 });
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 require __DIR__.'/auth.php';

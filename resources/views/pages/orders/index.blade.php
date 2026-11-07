@@ -77,7 +77,7 @@
                                     </h2>
                                 </div> --}}
                                 
-                                <form action="{{ url()->current() }}" method="GET" class="d-flex align-items-center gap-2">
+                                <form action="{{ url()->current() }}" method="GET" class="d-sm-flex align-items-center gap-2">
 
                                     @if (Auth::user()->type == 'admin')
                                         <div class="mr-4">
@@ -96,7 +96,7 @@
                                         </div>
                                     @endif
 
-                                    <div>
+                                    <div class="mt-3 mt-sm-0">
                                         <label for="date-picker" class="fw-bold mb-0 mr-2 text-nowrap">Filter Date:</label>
                                         <input
                                             type="date" 

@@ -16,6 +16,14 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
+
+    public function print($id)
+    {
+        return view('pages.orders.print')->with([
+            "order" => Order::find($id)
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      */

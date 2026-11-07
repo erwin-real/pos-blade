@@ -22,6 +22,11 @@
                     <div class="card shadow">
                         <div class="card-header ">
                             <h5>Order's Information</h5>
+                            <button type="button" 
+                                    class="btn btn-sm btn-primary" 
+                                    onclick="triggerBrowserPrint('{{ $order->id }}')">
+                                🖨️ Print Receipt
+                            </button>
                             <div class="clearfix"></div>
                         </div>
                         <div class="card-body">
@@ -151,5 +156,13 @@
             </div>
         </div>
     </div>
+
+    <!-- JavaScript to pop open the remote print route -->
+    <script>
+        function triggerBrowserPrint(orderId) {
+            const printUrl = `/orders/${orderId}/print-receipt`;
+            window.open(printUrl, '_blank', 'width=300,height=600');
+        }
+    </script>
 
 </x-app-layout>
